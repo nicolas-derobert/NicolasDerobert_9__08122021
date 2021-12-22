@@ -2,6 +2,21 @@ import { ROUTES_PATH } from '../constants/routes.js'
 import { formatDate, formatStatus } from "../app/format.js"
 import Logout from "./Logout.js"
 
+
+
+// hypothese de test : Vérifier que les dates sont triées correctement
+function sortDate( a, b ) {
+  let aDate = new Date(a.date);
+let  bDate = new Date(b.date);
+
+  if ( aDate< bDate ){
+    return 1;
+  }
+  if ( aDate > bDate ){
+    return -1;
+  }
+  return 0;
+}
 export default class {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
@@ -34,7 +49,10 @@ export default class {
       .bills()
       .list()
       .then(snapshot => {
-        const bills = snapshot
+       let snapshotSorted = snapshot.sort(sortDate);
+       console.log( snapshot)
+       console.log( snapshotSorted)
+        const bills = snapshotSorted
           .map(doc => {
             try {
               return {

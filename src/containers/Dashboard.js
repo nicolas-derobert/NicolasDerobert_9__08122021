@@ -85,16 +85,38 @@ export default class {
   }
 
   handleEditTicket(e, bill, bills) {
-    if (this.counter === undefined || this.id !== bill.id) this.counter = 0
-    if (this.id === undefined || this.id !== bill.id) this.id = bill.id
-    if (this.counter % 2 === 0) {
+    //Regarde le compteur et vérifie si il a déja été initialisé, regarde si lélément cliqué est nouveau, si il est nouveau alors le compteur est réinitialisé
+    if (this.counter === undefined || this.id !== bill.id) this.counter = 0 
+   // Applique counter a 0 si pas d'id de definis
+    //AFF1 : this.counter === 1 et this.id === undefined bill.id===xxxx => this.counter = 0  REINITIALISATION de this.counter
+    //AFF2 : this.counter === 1 et this.id === "xAntdtPjo8zA42m5WhWcXR" bill.id==="dMFWAp6UpHzNEqhK3aih29" => this.counter = 0  REINITIALISATION de this.counter
+    //AFF2bis : this.counter === 1 et this.id === ""dMFWAp6UpHzNEqhK3aih29"" bill.id===""dMFWAp6UpHzNEqhK3aih29"" => this.counter reste 1  
+
+    // Si c'est un nouveau alors le nouvel id est utilisé
+    if (this.id === undefined || this.id !== bill.id) this.id = bill.id 
+    // Affecte la facture au gestionnaire de ticket 
+    //AFF1 : this.id === undefined et bill.id === "xAntdtPjo8zA42m5WhWcXR") => this.id = bill.id THIS.ID prend la valeur clickée
+    //AFF2 : this.id === "xAntdtPjo8zA42m5WhWcXR" et bill.id === ""dMFWAp6UpHzNEqhK3aih29"") => this.id = bill.id == dMFWAp6UpHzNEqhK3aih29 donc THIS.ID prend la valeur clickée
+    //AFF2bis : this.id === "dMFWAp6UpHzNEqhK3aih29" et bill.id === ""dMFWAp6UpHzNEqhK3aih29"") => this.id ne change pas
+
+// Si c'est une nouvelle facture qui est sélectionnée alors le processus d'affichage est lancé.
+     if (this.counter % 2 === 0) {
+      //AFF1 : Au premier passage le résultat est 0
+      //AFF2 : Au premier passage le résultat est 0
+
+      // Au second passage le résultat est 0
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
-      })
-      $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
-      $('.dashboard-right-container div').html(DashboardFormUI(bill))
+      })//Affecte une couleur aux factures
+      $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })//Affecte une couleur 
+      $('.dashboard-right-container div').html(DashboardFormUI(bill)) //rempli le container
       $('.vertical-navbar').css({ height: '150vh' })
-      this.counter ++
+      this.counter ++ 
+//AFF1 : Au premier passage this.counter + 1
+//AFF2 : Au second passage this.counter + 1
+
+// Au second passage le résultat est 1
+// si ce n'est pas une nouvelle facture celle ci est effacée
     } else {
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
 
@@ -102,7 +124,7 @@ export default class {
         <div id="big-billed-icon"> ${BigBilledIcon} </div>
       `)
       $('.vertical-navbar').css({ height: '120vh' })
-      this.counter ++
+      this.counter ++// Le résultat passe à 1 au premier passage
     }
     $('#icon-eye-d').click(this.handleClickIconEye)
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
@@ -130,13 +152,24 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
-    if (this.counter === undefined || this.index !== index) this.counter = 0
-    if (this.index === undefined || this.index !== index) this.index = index
-    if (this.counter % 2 === 0) {
+    if (this.counter === undefined || this.index === index) this.counter = 0 
+    //AFF1 : this.counter ===  undefined, this.index === undefined et index ==1 => this.counter = 0
+    //AFF2 : this.counter ===  1, this.index === 1 et index ==2 => this.counter = 0 -> HYPPOTHESE : remplacer this.index !== index par this.index === index
+
+    // this.counter === 1 , this.index ===1 et index ==2 => this.counter = 0
+    if (this.index === undefined || this.index !== index) this.index = index 
+    //AFF1 : this.index === undefined, this.index === undefined et index ==1 => this.index = index =1
+    //AFF2 : this.index === 1, et index ==2 => this.index = index =2
+
+    // , this.index ===1 et this.index ===1 et index ==2 => this.index = 2
+    if (this.counter % 2 === 0) { // TRue
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
       $(`#status-bills-container${this.index}`)
         .html(cards(filteredBills(bills, getStatus(this.index))))
       this.counter ++
+      //AFF1 : this.counter devient 1
+      //AFF2 : this.counter devient 1
+
     } else {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
       $(`#status-bills-container${this.index}`)
