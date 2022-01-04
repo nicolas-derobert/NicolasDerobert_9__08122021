@@ -6,7 +6,7 @@ import Logout from "./Logout.js"
 
 // hypothese de test : Vérifier que les dates sont triées correctement
 function sortDate( a, b ) {
-  let aDate = new Date(a.date);
+let aDate = new Date(a.date);
 let  bDate = new Date(b.date);
 
   if ( aDate< bDate ){
