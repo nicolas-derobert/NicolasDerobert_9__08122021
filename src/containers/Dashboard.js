@@ -156,7 +156,6 @@ export default class {
     //AFF1 : this.counter ===  undefined, this.index === undefined et index ==1 => this.counter = 0
     //AFF2 : this.counter ===  1, this.index === 1 et index ==2 => this.counter = 0 -> HYPPOTHESE : remplacer this.index !== index par this.index === index
 
-    // this.counter === 1 , this.index ===1 et index ==2 => this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index 
     //AFF1 : this.index === undefined, this.index === undefined et index ==1 => this.index = index =1
     //AFF2 : this.index === 1, et index ==2 => this.index = index =2
